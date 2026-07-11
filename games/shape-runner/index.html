@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Play Shape Runner, a responsive endless runner where shape changes decide your fate." />
+    <title>Shape Runner | Arasan Games</title>
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/responsive.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page-loader" aria-hidden="true">
+      <div class="loader-ring"></div>
+    </div>
+
+    <header class="site-header">
+      <a class="brand" href="../../index.html" aria-label="Arasan Games home">
+        <img src="../../assets/logo/logo.svg" alt="Arasan Games logo" />
+        <span>Arasan Games</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Open navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
+        <a href="../../index.html">Home</a>
+        <a href="../../games.html">Games</a>
+        <a href="../../about.html">About</a>
+        <a href="../../contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">☀️</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="page-hero-copy">
+          <p class="eyebrow">Featured title</p>
+          <h1>Shape Runner</h1>
+          <p>Switch between triangle, square, and circle to pass the correct gates and survive a full-speed run.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="../../games/shape-runner/index.html">Play Game</a>
+            <a class="btn btn-secondary" href="../../games.html">Back to library</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="game-detail-shell">
+        <div class="detail-banner">
+          <img src="../../assets/images/shape-runner-thumb.svg" alt="Shape Runner gameplay banner" loading="eager" />
+        </div>
+
+        <div class="detail-grid">
+          <article class="glass-card section-card">
+            <h2>Game description</h2>
+            <p>Shape Runner is an arcade challenge where timing and shape-matching matter. Pick the right form, leap over hazards, and keep your streak alive.</p>
+            <ul class="detail-list">
+              <li>Genre: Arcade</li>
+              <li>Best for: Fast reflexes and quick decisions</li>
+              <li>Mode: Endless runner</li>
+            </ul>
+          </article>
+
+          <article class="glass-card section-card">
+            <h2>Controls</h2>
+            <ul class="detail-list">
+              <li>Space / Tap Jump</li>
+              <li>1, 2, 3 or Shape Button to switch forms</li>
+              <li>P pauses the run</li>
+            </ul>
+          </article>
+        </div>
+
+        <section class="glass-card section-card" aria-labelledby="screenshotsTitle">
+          <h2 id="screenshotsTitle">Screenshots</h2>
+          <div class="games-grid">
+            <img src="../../assets/images/shape-runner-thumb.svg" alt="Shape Runner gameplay preview" loading="lazy" />
+            <img src="../../assets/images/featured-hero.svg" alt="Featured portal artwork" loading="lazy" />
+          </div>
+        </section>
+
+        <section class="glass-card section-card" aria-labelledby="featuresTitle">
+          <h2 id="featuresTitle">Features</h2>
+          <ul class="detail-list">
+            <li>Responsive touch and keyboard controls</li>
+            <li>Polished particle effects and animated UI</li>
+            <li>Persistent best-score tracking</li>
+            <li>Installable web app experience</li>
+          </ul>
+        </section>
+      </section>
+    </main>
+
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
+
+    <footer class="site-footer">
+      <p>© <span id="year"></span> Arasan Games. Built for fast, immersive fun.</p>
+      <div class="footer-links">
+        <a href="https://github.com" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://linkedin.com" target="_blank" rel="noreferrer">LinkedIn</a>
+      </div>
+    </footer>
+
+    <script src="../../js/script.js"></script>
+  </body>
+</html>

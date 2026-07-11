@@ -30,11 +30,7 @@ Shape Runner is a polished 2D endless runner built with the HTML5 Canvas API, CS
 
 Example with Python:
 
-```bash
-python -m http.server 8000
-```
-
-Then open http://localhost:8000/ in your browser.
+Then open  in your browser.
 
 ## How to Play
 
