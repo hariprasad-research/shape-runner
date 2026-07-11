@@ -1,10 +1,13 @@
-const CACHE_NAME = "shape-runner-v1";
+const CACHE_NAME = "arasan-play-v2";
 const ASSETS = [
   "./",
   "./index.html",
-  "./style.css",
-  "./script.js",
-  "./manifest.json"
+  "./app.js",
+  "./games.json",
+  "./css/style.css",
+  "./css/responsive.css",
+  "./manifest.json",
+  "./service-worker.js"
 ];
 
 self.addEventListener("install", (event) => {

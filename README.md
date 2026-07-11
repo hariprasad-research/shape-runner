@@ -29,6 +29,9 @@ Shape Runner is a polished 2D endless runner built with the HTML5 Canvas API, CS
 2. Launch the game by opening [index.html](index.html) directly, or serve the folder with any static file server.
 
 Then open http://localhost:8000/ in your browser.
+Example with Python:
+
+Then open  in your browser.
 
 ## How to Play
 

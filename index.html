@@ -2,62 +2,117 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#0f172a" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>Shape Runner</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A modern streaming-inspired browser game portal with instant play switching." />
+    <meta name="theme-color" content="#07111f" />
+    <title>Arasan Play</title>
     <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
   </head>
   <body>
-    <div id="rotateOverlay" class="rotate-overlay" role="dialog" aria-live="polite" aria-hidden="true">
-      <div class="rotate-card">
-        <div class="rotate-icon" aria-hidden="true">📱</div>
-        <h2>Rotate Your Device</h2>
-        <p>This game is best played in Landscape Mode.<br />Please rotate your phone.</p>
-      </div>
+    <div class="page-loader" aria-hidden="true">
+      <div class="loader-ring"></div>
     </div>
 
-    <div class="game-shell">
-      <canvas id="gameCanvas"></canvas>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Arasan Play home">
+        <span class="brand-mark">A</span>
+        <span>Arasan Play</span>
+      </a>
 
-      <div class="hud">
-        <div class="hud-item">Score: <span id="scoreValue">0</span></div>
-        <div class="hud-item">Best: <span id="bestValue">0</span></div>
+      <div class="search-shell">
+        <input id="globalSearch" type="search" placeholder="Search games, genres, moods" aria-label="Search games" />
       </div>
 
-      <button id="pauseButton" class="control-button pause-button" aria-label="Pause game">⏸</button>
-
-      <div class="touch-controls" aria-label="Touch controls">
-        <button id="shapeButton" class="touch-button shape-button" aria-label="Change shape">
-          <span id="shapeIcon" class="shape-icon">■</span>
-          <span class="shape-label">Shape</span>
-        </button>
-        <button id="jumpButton" class="touch-button jump-button" aria-label="Jump">⬆</button>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">☀️</button>
       </div>
+    </header>
 
-      <div id="overlay" class="overlay active">
-        <div class="panel">
-          <div class="logo-badge">◆</div>
-          <h1 id="overlayTitle">Shape Runner</h1>
-          <p id="overlayMessage">Match the gate, switch shapes, and keep running.</p>
-          <div class="overlay-actions">
-            <button id="primaryActionButton" class="primary-action">▶ Start Game</button>
-            <button id="installButton" class="ghost-action">📱 Install App</button>
-            <button id="settingsButton" class="ghost-action">⚙ Settings</button>
-            <button id="leaderboardButton" class="ghost-action">🏆 Leaderboard</button>
-            <button id="secondaryActionButton" class="secondary-button" style="display: none">Restart</button>
-            <button id="tertiaryActionButton" class="secondary-button" style="display: none">Main Menu</button>
+    <main class="feed-shell">
+      <section class="player-panel glass-card">
+        <div class="player-frame">
+          <div id="playerPlaceholder" class="player-placeholder">
+            <div class="placeholder-core">
+              <div class="placeholder-badge">Live</div>
+              <h1 id="playerTitle">Shape Runner</h1>
+              <p id="playerDescription">Switch shapes, dodge hazards, and ride a neon rhythm to a sky-high score.</p>
+              <div class="player-actions">
+                <button class="btn btn-primary" id="playNowBtn">Play now</button>
+                <button class="btn btn-secondary" id="nextGameBtn">Next</button>
+              </div>
+            </div>
           </div>
-          <div class="meta-row">
-            <div class="meta-pill">Best: <span id="menuBestScore">0</span></div>
-            <div class="meta-pill">v1.0.0</div>
-          </div>
+          <iframe id="gameFrame" title="Selected game" loading="lazy" src="games/shape-runner/play.html"></iframe>
         </div>
-      </div>
-    </div>
+        <div class="player-meta">
+          <div>
+            <p class="eyebrow">Now playing</p>
+            <h2 id="playerMetaTitle">Shape Runner</h2>
+            <p id="playerMetaText">An endless arcade runner with smooth shape switching and fast reactions.</p>
+          </div>
+          <div class="pill-row" id="playerTags"></div>
+        </div>
+      </section>
 
-    <script src="script.js"></script>
+      <section class="feed-section related-section" aria-labelledby="relatedTitle">
+        <div class="section-heading">
+          <h2 id="relatedTitle">Related games</h2>
+        </div>
+        <div id="relatedList" class="game-list"></div>
+      </section>
+
+      <section class="chip-row" aria-label="Categories">
+        <button class="chip active" data-category="all">All</button>
+        <button class="chip" data-category="arcade">Arcade</button>
+        <button class="chip" data-category="racing">Racing</button>
+        <button class="chip" data-category="puzzle">Puzzle</button>
+        <button class="chip" data-category="adventure">Adventure</button>
+      </section>
+
+      <section class="feed-section" aria-labelledby="recentlyPlayedTitle">
+        <div class="section-heading">
+          <h2 id="recentlyPlayedTitle">Recently Played</h2>
+          <a href="#">See all</a>
+        </div>
+        <div id="recentlyPlayedList" class="game-list"></div>
+      </section>
+
+      <section class="feed-section" aria-labelledby="continuePlayingTitle">
+        <div class="section-heading">
+          <h2 id="continuePlayingTitle">Continue Playing</h2>
+          <a href="#">Resume</a>
+        </div>
+        <div id="continuePlayingList" class="game-list"></div>
+      </section>
+
+      <section class="feed-section" aria-labelledby="trendingTitle">
+        <div class="section-heading">
+          <h2 id="trendingTitle">Trending</h2>
+          <a href="#">More</a>
+        </div>
+        <div id="trendingList" class="game-list"></div>
+      </section>
+
+      <section class="feed-section" aria-labelledby="recommendedTitle">
+        <div class="section-heading">
+          <h2 id="recommendedTitle">Recommended</h2>
+          <a href="#">Explore</a>
+        </div>
+        <div id="recommendedList" class="game-list"></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+      <a href="#" class="active">Home</a>
+      <a href="games.html">Library</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
+
+    <script src="app.js"></script>
   </body>
 </html>

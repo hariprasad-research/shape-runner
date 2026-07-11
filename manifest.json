@@ -1,7 +1,7 @@
 {
-  "name": "Shape Runner",
-  "short_name": "ShapeRunner",
-  "description": "A responsive endless runner game built with the Canvas API.",
+  "name": "Arasan Play",
+  "short_name": "ArasanPlay",
+  "description": "A modern streaming-inspired gaming portal with instant browser game switching.",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "landscape",

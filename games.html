@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Discover action, adventure, and puzzle experiences on Arasan Games." />
+    <title>Games | Arasan Games</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+  </head>
+  <body>
+    <div class="page-loader" aria-hidden="true">
+      <div class="loader-ring"></div>
+    </div>
+
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Arasan Games home">
+        <img src="assets/logo/logo.svg" alt="Arasan Games logo" />
+        <span>Arasan Games</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Open navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a class="active" href="games.html">Games</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">☀️</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero compact-hero">
+        <div class="page-hero-copy">
+          <p class="eyebrow">Game library</p>
+          <h1>Browse every title crafted for modern play.</h1>
+          <p>Search by title, filter by genre, and jump directly into your next favorite experience.</p>
+        </div>
+      </section>
+
+      <section class="catalog-shell" aria-labelledby="catalogTitle">
+        <div class="catalog-toolbar">
+          <div class="search-field">
+            <input id="gameSearch" type="search" placeholder="Search games" aria-label="Search games" />
+            <span>🔎</span>
+          </div>
+          <label class="filter-field">
+            <span class="sr-only">Filter by category</span>
+            <select id="categoryFilter" aria-label="Filter by category">
+              <option value="all">All categories</option>
+            </select>
+          </label>
+        </div>
+        <div id="gamesGrid" class="games-grid" role="list"></div>
+      </section>
+    </main>
+
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
+
+    <footer class="site-footer">
+      <p>© <span id="year"></span> Arasan Games. Built for fast, immersive fun.</p>
+      <div class="footer-links">
+        <a href="https://github.com" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://linkedin.com" target="_blank" rel="noreferrer">LinkedIn</a>
+      </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
