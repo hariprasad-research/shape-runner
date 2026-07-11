@@ -28,12 +28,6 @@ Shape Runner is a polished 2D endless runner built with the HTML5 Canvas API, CS
 1. Open the project folder in a browser.
 2. Launch the game by opening [index.html](index.html) directly, or serve the folder with any static file server.
 
-Example with Python:
-
-```bash
-python -m http.server 8000
-```
-
 Then open http://localhost:8000/ in your browser.
 
 ## How to Play
@@ -43,19 +37,6 @@ Then open http://localhost:8000/ in your browser.
 - Use the jump key to clear ground obstacles.
 - Passing a matching gate adds points.
 - A wrong shape or obstacle collision ends the run.
-
-## Folder Structure
-
-```text
-shape-runner/
-├── index.html
-├── style.css
-├── script.js
-├── assets/
-│   ├── audio/
-│   └── fonts/
-└── README.md
-```
 
 ## Future Improvements
 
