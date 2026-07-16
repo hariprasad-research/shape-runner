@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Shape Runner</title>
+    <link rel="stylesheet" href="style.css" />
+
+  </head>
+  <body>
+    <div id="rotateOverlay" class="rotate-overlay" role="dialog" aria-live="polite" aria-hidden="true">
+      <div class="rotate-card">
+        <div class="rotate-icon" aria-hidden="true">📱</div>
+        <h2>Rotate Your Device</h2>
+        <p>This game is best played in Landscape Mode.<br />Please rotate your phone.</p>
+      </div>
+    </div>
+
+    <div class="game-shell">
+      <canvas id="gameCanvas"></canvas>
+
+      <div class="hud">
+        <div class="hud-item">Score: <span id="scoreValue">0</span></div>
+        <div class="hud-item">Best: <span id="bestValue">0</span></div>
+      </div>
+
+      <button id="pauseButton" class="control-button pause-button" aria-label="Pause game">⏸</button>
+      <button id="exitButton" class="control-button exit-button" aria-label="Exit game">✕ Exit</button>
+
+      <div class="touch-controls" aria-label="Touch controls">
+        <button id="shapeButton" class="touch-button shape-button" aria-label="Change shape">
+          <span id="shapeIcon" class="shape-icon">■</span>
+          <span class="shape-label">Shape</span>
+        </button>
+        <button id="jumpButton" class="touch-button jump-button" aria-label="Jump">⬆</button>
+      </div>
+
+      <div id="overlay" class="overlay active">
+        <div class="panel">
+          <div class="logo-badge">◆</div>
+          <h1 id="overlayTitle">Shape Runner</h1>
+          <p id="overlayMessage">Match the gate, switch shapes, and keep running.</p>
+          <div class="overlay-actions">
+            <button id="primaryActionButton" class="primary-action">▶ Start Game</button>
+            <button id="installButton" class="ghost-action">📱 Install App</button>
+            <button id="settingsButton" class="ghost-action">⚙ Settings</button>
+            <button id="leaderboardButton" class="ghost-action">🏆 Leaderboard</button>
+            <button id="exitOverlayButton" class="ghost-action">↩ Exit</button>
+            <button id="secondaryActionButton" class="secondary-button" style="display: none">Restart</button>
+            <button id="tertiaryActionButton" class="secondary-button" style="display: none">Main Menu</button>
+          </div>
+          <div class="meta-row">
+            <div class="meta-pill">Best: <span id="menuBestScore">0</span></div>
+            <div class="meta-pill">v1.0.0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
