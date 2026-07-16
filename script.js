@@ -432,12 +432,7 @@ class UIManager {
     this.primaryButton = document.getElementById("primaryActionButton");
     this.secondaryButton = document.getElementById("secondaryActionButton");
     this.tertiaryButton = document.getElementById("tertiaryActionButton");
-    this.installButton = document.getElementById("installButton");
-    this.settingsButton = document.getElementById("settingsButton");
-    this.leaderboardButton = document.getElementById("leaderboardButton");
     this.pauseButton = document.getElementById("pauseButton");
-    this.exitButton = document.getElementById("exitButton");
-    this.exitOverlayButton = document.getElementById("exitOverlayButton");
     this.shapeButton = document.getElementById("shapeButton");
     this.jumpButton = document.getElementById("jumpButton");
     this.touchControls = document.querySelector(".touch-controls");
@@ -448,12 +443,7 @@ class UIManager {
     this.primaryButton.addEventListener("click", () => this.handlePrimaryAction());
     this.secondaryButton.addEventListener("click", () => this.handleSecondaryAction());
     this.tertiaryButton.addEventListener("click", () => this.handleTertiaryAction());
-    this.installButton.addEventListener("click", () => this.handleInstallPrompt());
-    this.settingsButton.addEventListener("click", () => this.showSettings());
-    this.leaderboardButton.addEventListener("click", () => this.showLeaderboard());
     this.pauseButton.addEventListener("click", () => this.game.togglePause());
-    this.exitButton.addEventListener("click", () => this.handleExit());
-    this.exitOverlayButton.addEventListener("click", () => this.handleExit());
     this.shapeButton.addEventListener("pointerdown", (event) => this.handleButtonPress(event, this.cycleShape));
     this.jumpButton.addEventListener("pointerdown", (event) => this.handleButtonPress(event, this.jump));
     this.shapeButton.addEventListener("pointerup", () => this.removePressedState(this.shapeButton));
@@ -472,41 +462,7 @@ class UIManager {
     }
   }
 
-  handleInstallPrompt() {
-    if (this.game.installPrompt) {
-      this.game.installPrompt.prompt();
-    }
-  }
-
-  handleExit() {
-    window.location.href = "../../games/shape-runner/index.html";
-  }
-
-  showSettings() {
-    this.title.textContent = "Settings";
-    this.message.textContent = "Customize your run.";
-    this.primaryButton.textContent = "Music: On";
-    this.secondaryButton.textContent = "Sound: On";
-    this.tertiaryButton.textContent = "Back";
-    this.secondaryButton.style.display = "inline-flex";
-    this.tertiaryButton.style.display = "inline-flex";
-    this.installButton.style.display = "none";
-    this.settingsButton.style.display = "none";
-    this.leaderboardButton.style.display = "none";
-  }
-
-  showLeaderboard() {
-    this.title.textContent = "Leaderboard";
-    this.message.textContent = "Coming soon with weekly challenges.";
-    this.primaryButton.textContent = "Close";
-    this.secondaryButton.style.display = "none";
-    this.tertiaryButton.style.display = "none";
-    this.installButton.style.display = "none";
-    this.settingsButton.style.display = "none";
-    this.leaderboardButton.style.display = "none";
-  }
-
-  handleSecondaryAction() {
+   handleSecondaryAction() {
     this.game.restartGame();
   }
 
@@ -562,15 +518,10 @@ class UIManager {
     this.message.textContent = "Match the gate, switch shapes, and keep running.";
     this.primaryButton.textContent = "▶ Start Game";
     this.secondaryButton.textContent = "Restart";
-    this.tertiaryButton.textContent = "Main Menu";
     this.secondaryButton.style.display = "none";
     this.tertiaryButton.style.display = "none";
     this.pauseButton.style.display = "none";
-    this.exitButton.style.display = "none";
     this.touchControls.style.display = "none";
-    this.installButton.style.display = "inline-flex";
-    this.settingsButton.style.display = "inline-flex";
-    this.leaderboardButton.style.display = "inline-flex";
   }
 
   showPause() {
@@ -579,15 +530,10 @@ class UIManager {
     this.message.textContent = "Take a breath and continue when ready.";
     this.primaryButton.textContent = "Resume";
     this.secondaryButton.textContent = "Restart";
-    this.tertiaryButton.textContent = "Main Menu";
     this.secondaryButton.style.display = "inline-flex";
     this.tertiaryButton.style.display = "inline-flex";
     this.pauseButton.style.display = "none";
-    this.exitButton.style.display = "none";
     this.touchControls.style.display = "none";
-    this.installButton.style.display = "none";
-    this.settingsButton.style.display = "none";
-    this.leaderboardButton.style.display = "none";
   }
 
   showGameOver() {
@@ -596,21 +542,15 @@ class UIManager {
     this.message.textContent = `Score: ${this.game.scoreManager.score}. Press R to replay.`;
     this.primaryButton.textContent = "Play Again";
     this.secondaryButton.textContent = "Restart";
-    this.tertiaryButton.textContent = "Main Menu";
     this.secondaryButton.style.display = "none";
     this.tertiaryButton.style.display = "inline-flex";
     this.pauseButton.style.display = "none";
-    this.exitButton.style.display = "none";
     this.touchControls.style.display = "none";
-    this.installButton.style.display = "none";
-    this.settingsButton.style.display = "none";
-    this.leaderboardButton.style.display = "none";
   }
 
   hideOverlay() {
     this.overlay.classList.remove("active");
     this.pauseButton.style.display = this.game.state === "playing" ? "inline-flex" : "none";
-    this.exitButton.style.display = this.game.state === "playing" ? "inline-flex" : "none";
     this.touchControls.style.display = this.game.state === "playing" ? "flex" : "none";
   }
 
@@ -671,12 +611,10 @@ class Game {
     window.addEventListener("beforeinstallprompt", (event) => {
       event.preventDefault();
       this.installPrompt = event;
-      this.uiManager.installButton.style.display = "inline-flex";
     });
 
     window.addEventListener("appinstalled", () => {
       this.installPrompt = null;
-      this.uiManager.installButton.style.display = "none";
     });
   }
 
@@ -742,7 +680,7 @@ class Game {
     if (resumeState === "playing") {
       this.uiManager.hideOverlay();
     } else if (resumeState === "paused") {
-      this.uiManager.showPause();
+      this.uiManager.showPause(); 
     } else if (resumeState === "menu") {
       this.uiManager.showMenu();
     } else if (resumeState === "gameover") {
