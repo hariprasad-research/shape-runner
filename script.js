@@ -406,35 +406,35 @@ for (const hazard of hazards) {
   }
 
   // Draw shapes with minimal glow.
-  function drawShape(x, y, size, color, shapeIndex) {
-    ctx.save();
+ function drawShape(x, y, size, color, shapeIndex) {
+  const isPhone = window.matchMedia("(max-width: 600px)").matches;
+  const scale = isPhone ? 1.12 : 1;
+  const actualSize = size * scale;
 
-    ctx.fillStyle = color;
-    ctx.shadowColor = color;
-    ctx.shadowBlur = 3;
+  x -= (actualSize - size) / 2;
+  y -= (actualSize - size) / 2;
+  size = actualSize;
 
-    ctx.beginPath();
+  ctx.save();
+  ctx.fillStyle = color;
+  ctx.shadowBlur = 2;
+  ctx.shadowColor = color;
+  ctx.beginPath();
 
-    if (shapeIndex === 0) {
-      ctx.moveTo(x + size / 2, y);
-      ctx.lineTo(x + size, y + size);
-      ctx.lineTo(x, y + size);
-      ctx.closePath();
-    } else if (shapeIndex === 1) {
-      ctx.roundRect(x, y, size, size, 4);
-    } else {
-      ctx.arc(
-        x + size / 2,
-        y + size / 2,
-        size / 2,
-        0,
-        Math.PI * 2
-      );
-    }
-
-    ctx.fill();
-    ctx.restore();
+  if (shapeIndex === 0) {
+    ctx.moveTo(x + size / 2, y);
+    ctx.lineTo(x + size, y + size);
+    ctx.lineTo(x, y + size);
+    ctx.closePath();
+  } else if (shapeIndex === 1) {
+    ctx.roundRect(x, y, size, size, 4);
+  } else {
+    ctx.arc(x + size / 2, y + size / 2, size / 2, 0, Math.PI * 2);
   }
+
+  ctx.fill();
+  ctx.restore();
+}
 
   function drawBackground() {
     const gradient = ctx.createLinearGradient(
@@ -553,7 +553,7 @@ for (const hazard of hazards) {
       ctx.save();
 
       ctx.shadowBlur = 0;
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 5;
       ctx.strokeStyle = color;
       ctx.fillStyle = "#111c3c";
 
@@ -777,4 +777,6 @@ for (const hazard of hazards) {
   resetGame();
   resizeCanvas();
   draw();
+
 })();
+
