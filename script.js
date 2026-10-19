@@ -5,19 +5,19 @@ const SHAPE_COLORS = {
   circle: "#60a5fa",
 };
 const BEST_SCORE_KEY = "shape-runner-best-score";
-const GAME_WIDTH = 90;
-const GAME_HEIGHT = 50;
-const GROUND_Y = 40;
-const PLAYER_X = 16;
+const GAME_WIDTH = 900;
+const GAME_HEIGHT = 500;
+const GROUND_Y = 400;
+const PLAYER_X = 160;
 const PLAYER_WIDTH = 46;
 const PLAYER_HEIGHT = 46;
-const JUMP_FORCE = 70;
-const GRAVITY = 18;
-const BASE_SPEED = 32;
+const JUMP_FORCE = 700;
+const GRAVITY = 1800;
+const BASE_SPEED = 320;
 const SPEED_INCREMENT = 18;
 const SPEED_INTERVAL = 20;
 const GATE_WIDTH = 76;
-const GATE_HEIGHT = 12;
+const GATE_HEIGHT = 128;
 const OBSTACLE_WIDTH = 56;
 const OBSTACLE_HEIGHT = 58;
 
@@ -37,7 +37,6 @@ class InputManager {
     if (["1", "2", "3", "p", "r", " ", "enter"].includes(key)) {
       event.preventDefault();
     }
-
     if (!this.keys.has(key)) {
       this.justPressed.add(key);
     }
@@ -109,7 +108,6 @@ class Player {
         this.grounded = true;
       }
     }
-
     this.morphTimer = Math.min(1, this.morphTimer + deltaTime * 6);
     if (this.hitFlash > 0) {
       this.hitFlash = Math.max(0, this.hitFlash - deltaTime * 2.5);
@@ -120,11 +118,10 @@ class Player {
     const pulse = 1 + Math.sin(this.morphTimer * Math.PI) * 0.08;
     const baseX = this.x + this.width / 2;
     const baseY = this.y + this.height / 2;
-    const scale = pulse;
 
     context.save();
     context.translate(baseX, baseY);
-    context.scale(scale, scale);
+    context.scale(pulse, pulse);
 
     if (this.hitFlash > 0) {
       context.globalAlpha = 0.5 + this.hitFlash * 0.5;
@@ -294,7 +291,6 @@ class GateSpawner {
       const interval = Math.max(0.5, 1.1 - this.game.speedLevel * 0.04);
       this.spawnTimer = interval;
     }
-
     this.activeGates.forEach((gate) => gate.update(deltaTime));
   }
 }
@@ -440,6 +436,8 @@ class UIManager {
     this.settingsButton = document.getElementById("settingsButton");
     this.leaderboardButton = document.getElementById("leaderboardButton");
     this.pauseButton = document.getElementById("pauseButton");
+    this.exitButton = document.getElementById("exitButton");
+    this.exitOverlayButton = document.getElementById("exitOverlayButton");
     this.shapeButton = document.getElementById("shapeButton");
     this.jumpButton = document.getElementById("jumpButton");
     this.touchControls = document.querySelector(".touch-controls");
@@ -454,6 +452,8 @@ class UIManager {
     this.settingsButton.addEventListener("click", () => this.showSettings());
     this.leaderboardButton.addEventListener("click", () => this.showLeaderboard());
     this.pauseButton.addEventListener("click", () => this.game.togglePause());
+    this.exitButton.addEventListener("click", () => this.handleExit());
+    this.exitOverlayButton.addEventListener("click", () => this.handleExit());
     this.shapeButton.addEventListener("pointerdown", (event) => this.handleButtonPress(event, this.cycleShape));
     this.jumpButton.addEventListener("pointerdown", (event) => this.handleButtonPress(event, this.jump));
     this.shapeButton.addEventListener("pointerup", () => this.removePressedState(this.shapeButton));
@@ -476,6 +476,10 @@ class UIManager {
     if (this.game.installPrompt) {
       this.game.installPrompt.prompt();
     }
+  }
+
+  handleExit() {
+    window.location.href = "../../games/shape-runner/index.html";
   }
 
   showSettings() {
@@ -503,13 +507,7 @@ class UIManager {
   }
 
   handleSecondaryAction() {
-    if (this.game.state === "paused") {
-      this.game.restartGame();
-    } else if (this.game.state === "gameover") {
-      this.game.restartGame();
-    } else {
-      this.game.restartGame();
-    }
+    this.game.restartGame();
   }
 
   handleTertiaryAction() {
@@ -568,6 +566,7 @@ class UIManager {
     this.secondaryButton.style.display = "none";
     this.tertiaryButton.style.display = "none";
     this.pauseButton.style.display = "none";
+    this.exitButton.style.display = "none";
     this.touchControls.style.display = "none";
     this.installButton.style.display = "inline-flex";
     this.settingsButton.style.display = "inline-flex";
@@ -584,6 +583,7 @@ class UIManager {
     this.secondaryButton.style.display = "inline-flex";
     this.tertiaryButton.style.display = "inline-flex";
     this.pauseButton.style.display = "none";
+    this.exitButton.style.display = "none";
     this.touchControls.style.display = "none";
     this.installButton.style.display = "none";
     this.settingsButton.style.display = "none";
@@ -600,6 +600,7 @@ class UIManager {
     this.secondaryButton.style.display = "none";
     this.tertiaryButton.style.display = "inline-flex";
     this.pauseButton.style.display = "none";
+    this.exitButton.style.display = "none";
     this.touchControls.style.display = "none";
     this.installButton.style.display = "none";
     this.settingsButton.style.display = "none";
@@ -609,6 +610,7 @@ class UIManager {
   hideOverlay() {
     this.overlay.classList.remove("active");
     this.pauseButton.style.display = this.game.state === "playing" ? "inline-flex" : "none";
+    this.exitButton.style.display = this.game.state === "playing" ? "inline-flex" : "none";
     this.touchControls.style.display = this.game.state === "playing" ? "flex" : "none";
   }
 
@@ -630,7 +632,6 @@ class Game {
     this.state = "menu";
     this.lastTime = 0;
     this.timeElapsed = 0;
-    this.isPausedByOverlay = false;
     this.orientationPaused = false;
     this.previousStateBeforeOrientation = "menu";
     this.installPrompt = null;
@@ -717,7 +718,6 @@ class Game {
       this.uiManager.hideOrientationOverlay();
       return;
     }
-
     if (this.isPortraitMode()) {
       this.pauseForOrientation();
     } else {
@@ -739,7 +739,6 @@ class Game {
     const resumeState = this.previousStateBeforeOrientation || "playing";
     this.state = resumeState;
     this.uiManager.hideOrientationOverlay();
-
     if (resumeState === "playing") {
       this.uiManager.hideOverlay();
     } else if (resumeState === "paused") {
@@ -826,13 +825,10 @@ class Game {
 
   update(deltaTime) {
     if (this.state !== "playing") return;
-
     this.handleInput();
-
     this.timeElapsed += deltaTime;
     this.speed = BASE_SPEED + Math.floor(this.timeElapsed / SPEED_INTERVAL) * SPEED_INCREMENT;
     this.speedLevel = 1 + Math.floor(this.timeElapsed / SPEED_INTERVAL);
-
     this.player.update(deltaTime);
     this.gateSpawner.update(deltaTime);
     this.particleSystem.update(deltaTime);
@@ -851,12 +847,7 @@ class Game {
     for (const gate of this.gateSpawner.activeGates) {
       if (!gate.active) continue;
       if (gate.type === "obstacle") {
-        const playerBounds = {
-          x: this.player.x + 4,
-          y: this.player.y + 4,
-          width: this.player.width - 8,
-          height: this.player.height - 8,
-        };
+        const playerBounds = { x: this.player.x + 4, y: this.player.y + 4, width: this.player.width - 8, height: this.player.height - 8 };
         const gateBounds = gate.getBounds();
         const collision = playerBounds.x < gateBounds.x + gateBounds.width && playerBounds.x + playerBounds.width > gateBounds.x && playerBounds.y < gateBounds.y + gateBounds.height && playerBounds.y + playerBounds.height > gateBounds.y;
         if (collision) {
@@ -864,12 +855,7 @@ class Game {
           return;
         }
       } else {
-        const playerBounds = {
-          x: this.player.x + 4,
-          y: this.player.y + 4,
-          width: this.player.width - 8,
-          height: this.player.height - 8,
-        };
+        const playerBounds = { x: this.player.x + 4, y: this.player.y + 4, width: this.player.width - 8, height: this.player.height - 8 };
         const gateBounds = gate.getBounds();
         const collision = playerBounds.x < gateBounds.x + gateBounds.width && playerBounds.x + playerBounds.width > gateBounds.x && playerBounds.y < gateBounds.y + gateBounds.height && playerBounds.y + playerBounds.height > gateBounds.y;
         if (collision) {
@@ -898,7 +884,6 @@ class Game {
 
   drawBackground() {
     this.context.clearRect(0, 0, this.width, this.height);
-
     const sky = this.context.createLinearGradient(0, 0, 0, this.height);
     sky.addColorStop(0, "#8bd3ff");
     sky.addColorStop(0.75, "#f8fafc");
@@ -954,7 +939,6 @@ class Game {
   draw() {
     this.drawBackground();
     this.drawGround();
-
     this.gateSpawner.activeGates.forEach((gate) => gate.draw(this.context));
     this.particleSystem.draw(this.context);
     this.player.draw(this.context);
@@ -974,8 +958,7 @@ class Game {
 
 window.addEventListener("load", () => {
   new Game();
-
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+    navigator.serviceWorker.register("../../service-worker.js").catch(() => {});
   }
 });
